@@ -3,8 +3,8 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import MenuLogin from "../components/MenuLogin";
-import { Link } from "react-router-dom";
 import userRepository from "../repositories/User";
+import { NavLink } from "react-router-dom";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -80,9 +80,9 @@ export default function Login() {
               Iniciar sesión
             </Button>
             <Button className="w-100" variant="secondary">
-              <Link className="text-white" to="/register">
+              <NavLink className="text-white" to="/register">
                 Crear cuenta
-              </Link>
+              </NavLink>
             </Button>
           </Form>
         </div>

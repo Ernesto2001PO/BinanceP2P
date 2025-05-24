@@ -7,7 +7,7 @@ import { useAuth } from "../../hook/useAuth";
 import Button from "react-bootstrap/Button";
 
 function Menu() {
-  const { isAuthenticated , logout } = useAuth(true);
+  const { isAuthenticated , logout } = useAuth(false);
 
   return (
     <Navbar
@@ -27,7 +27,7 @@ function Menu() {
               </NavLink>
             </>
             <>
-              {!isAuthenticated && (
+              {!isAuthenticated &&  location.pathname !== "/login" && location.pathname !== "/register" && (
                 <>
                   <NavLink to="/login" className="nav-link">
                     Login
@@ -41,7 +41,6 @@ function Menu() {
             <>
               {isAuthenticated && (
                 <>
-
                   <Button variant="link" onClick={logout}>
                     Cerrar Sesión
                   </Button>

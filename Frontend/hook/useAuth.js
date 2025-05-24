@@ -23,7 +23,7 @@ export const useAuth = (shouldRedirect) => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setIsAuthenticated(false);
-        navigate("/login");
+        navigate("/home");
     }
     return {
         isAuthenticated,
