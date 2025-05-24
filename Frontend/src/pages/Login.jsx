@@ -4,25 +4,33 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import MenuLogin from "../components/MenuLogin";
 import { Link } from "react-router-dom";
+import userRepository from "../repositories/User";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
-  const handleLogin = (e) => {
-      e.preventDefault();
-      
-
-
-      
-    setShowAlert(true);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const response = await userRepository.loginUser({
+      email,
+      password,
+    });
+    console.log(response);
+    if (response && response.usuario && response.usuario.token) {
+      localStorage.setItem("token", response.usuario.token);
+      localStorage.setItem("user", JSON.stringify(response.usuario.nombre));
+      window.location.href = "/page";
+    } else {
+      setShowAlert(true);
+    }
   };
 
   return (
-      <div>
-        <MenuLogin />
+    <div>
+      <MenuLogin />
       <div
         className="d-flex min-vh-100 align-items-center"
         style={{ background: "#363636" }}
@@ -44,8 +52,8 @@ export default function Login() {
               <Form.Control
                 type="text"
                 placeholder="Usuario o correo"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </Form.Group>
@@ -72,7 +80,9 @@ export default function Login() {
               Iniciar sesión
             </Button>
             <Button className="w-100" variant="secondary">
-              <Link className="text-white" to="/register">Crear cuenta</Link>
+              <Link className="text-white" to="/register">
+                Crear cuenta
+              </Link>
             </Button>
           </Form>
         </div>

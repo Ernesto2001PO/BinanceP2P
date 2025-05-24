@@ -1,13 +1,14 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, NavLink } from "react-router-dom";
 import React from "react";
-
-
+import { useAuth } from "../../hook/useAuth";
+import Button from "react-bootstrap/Button";
 
 function Menu() {
+  const { isAuthenticated , logout } = useAuth(true);
+
   return (
     <Navbar
       bg="dark"
@@ -26,18 +27,32 @@ function Menu() {
               </NavLink>
             </>
             <>
-              <NavLink to="/login" className="nav-link">
-                Iniciar Sesión
-              </NavLink>
-              <NavLink to="/register" className="nav-link">
-                Registro
-              </NavLink>
+              {!isAuthenticated && (
+                <>
+                  <NavLink to="/login" className="nav-link">
+                    Login
+                  </NavLink>
+                  <NavLink to="/register" className="nav-link">
+                    Register
+                  </NavLink>
+                </>
+              )}
+            </>
+            <>
+              {isAuthenticated && (
+                <>
+
+                  <Button variant="link" onClick={logout}>
+                    Cerrar Sesión
+                  </Button>
+                </>
+              )}
             </>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-};
+}
 
 export default Menu;
