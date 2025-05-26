@@ -2,7 +2,7 @@ const models = require("../models");
 const TOKEN = require("../utils/token");
 exports.crearUsuario = async (req, res) => {
     try {
-        const { nombre, email, password_hash, rol } = req.body;
+        const { nombre, email, password_hash } = req.body;
 
         const usuarioExistente = await models.Usuario.findOne({ where: { email } });
         if (usuarioExistente) {
