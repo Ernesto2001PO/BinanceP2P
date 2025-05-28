@@ -12,11 +12,11 @@ module.exports = function (sequelize) {
                 autoIncrement: true,
             },
             saldo: {
-                type: DataTypes.STRING,
+                type: DataTypes.INTEGER,
                 allowNull: false,
             },
             id_usuario: {
-                type: DataTypes.STRING,
+                type: DataTypes.INTEGER,
                 allowNull: false,
             },
             id_moneda: {

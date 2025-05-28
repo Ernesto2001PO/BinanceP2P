@@ -1,12 +1,46 @@
 import React from "react";
 import Menu from "../components/Menu";
 import { useAuth } from "../../hook/useAuth";
-
+import { useEffect } from "react";
+import BilleteraRepository from "../repositories/BilleteraRepository";
 const Page = () => {
   const { isAuthenticated } = useAuth(false);
-  if (!isAuthenticated) {
-    window.location.href = "/login";
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null);
+  const { id_usuario } = useParams(); 
+
+
+
+
+
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      window.location.href = "/login";
+    }
+    try {
+      const getBilleteraByUser = async () => {
+        const data = await BilleteraRepository.obtenerBilleteraPorUsuarioId(id_usuario);
+        if (data) {
+          console.log("Billetera obtenida:", data);
+        } else {
+          console.log("No se encontró la billetera para el usuario.");
+        }
+      }
+      getBilleteraByUser();
+    } catch (error) {
+      console.error("Error fetching wallet:", error);
+    }
+  }, [isAuthenticated]);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+
 
   return (
     <div>
@@ -20,6 +54,10 @@ const Page = () => {
         <option value="2">Reales</option>
         <option value="3">Pesos Argentinos</option>
       </select>
+      <h2>Ingrese el monto que desea agregar</h2>
+      {array.map(element => (
+        <option key={element.id} value={element.id}>{element.nombre}</option>
+      ))}
     </div>
   );
 };

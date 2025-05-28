@@ -3,9 +3,9 @@ const models = require('../models/');
 
 exports.crearBilletera = async (req, res) => {
     try {
-        const { id_usuario, id_moneda } = req.body;
+        const { id_usuario, id_moneda, saldo } = req.body;
 
-        // Verificar si la billetera ya existe
+        // Verificar si la billetera ya existe para ese usuario y moneda
         const billeteraExistente = await models.Billetera.findOne({
             where: { id_usuario, id_moneda }
         });
@@ -17,7 +17,8 @@ exports.crearBilletera = async (req, res) => {
         // Crear la nueva billetera
         const nuevaBilletera = await models.Billetera.create({
             id_usuario,
-            id_moneda
+            id_moneda,
+            saldo: saldo || 0 // Asignar un saldo inicial de 0 si no se proporciona
         });
 
         res.status(201).json({
@@ -66,6 +67,32 @@ exports.obtenerBilleteraPorId = async (req, res) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }
+
+exports.obtenerBillteraPorMoneda = async (req, res) => {
+    try {
+        const { id_moneda } = req.params;
+
+        // Obtener las billeteras por ID de moneda
+        const billeteras = await models.Billetera.findAll({
+            where: { id_moneda }
+        });
+
+        if (billeteras.length === 0) {
+            return res.status(404).json({ message: "No se encontraron billeteras para esta moneda" });
+        }
+
+        res.json(billeteras);
+    } catch (error) {
+        console.error("Error al obtener las billeteras por moneda:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+
+
+
+
+
 exports.actualizarBilletera = async (req, res) => {
     try {
         const { id_billetera } = req.params;
@@ -83,6 +110,25 @@ exports.actualizarBilletera = async (req, res) => {
         res.json({ message: "Billetera actualizada exitosamente" });
     } catch (error) {
         console.error("Error al actualizar la billetera:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+exports.eliminarBilletera = async (req, res) => {
+    try {
+        const { id_billetera } = req.params;
+
+        // Eliminar la billetera
+        const deleted = await models.Billetera.destroy({
+            where: { id_billetera }
+        });
+
+        if (!deleted) {
+            return res.status(404).json({ message: "Billetera no encontrada" });
+        }
+
+        res.json({ message: "Billetera eliminada exitosamente" });
+    } catch (error) {
+        console.error("Error al eliminar la billetera:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }
