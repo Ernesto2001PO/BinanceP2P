@@ -17,7 +17,11 @@ export const useAuth = (shouldRedirect) => {
     const login = (token, user) => {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
+
+
         setIsAuthenticated(true);
+
+    
     }
     const logout = () => {
         localStorage.removeItem("token");

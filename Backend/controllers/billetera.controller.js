@@ -36,14 +36,25 @@ exports.obtenerBilleterasPorUsuario = async (req, res) => {
 
         // Obtener las billeteras del usuario
         const billeteras = await models.Billetera.findAll({
-            where: { id_usuario }
+            where: { id_usuario },
+            include: [
+                {
+                    model: models.Usuario,
+                    as: 'usuario',
+                    attributes: ['id', 'nombre', 'email']
+                }
+            ]
         });
+
+
+
 
         if (billeteras.length === 0) {
             return res.status(404).json({ message: "No se encontraron billeteras para este usuario" });
         }
 
-        res.json(billeteras);
+
+        res.json({ billeteras });
     } catch (error) {
         console.error("Error al obtener las billeteras:", error);
         return res.status(500).json({ message: "Error interno del servidor" });

@@ -22,6 +22,9 @@ export default function Login() {
     if (response && response.usuario && response.usuario.token) {
       localStorage.setItem("token", response.usuario.token);
       localStorage.setItem("user", JSON.stringify(response.usuario.nombre));
+      localStorage.setItem("id_usuario", response.usuario.id);
+      localStorage.setItem("email", response.usuario.email);
+      localStorage.setItem("tipo_usuario", response.usuario.rol);
       window.location.href = "/page";
     } else {
       setShowAlert(true);

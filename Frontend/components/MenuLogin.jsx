@@ -23,6 +23,7 @@ function MenuLogin() {
                 Home
               </NavLink>
             </>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

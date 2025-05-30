@@ -18,12 +18,16 @@ models.Billetera.belongsTo(models.Usuario, {
     targetKey: 'id'
 });
 
-// Un usuario puede tener muchas billeteras
 models.Usuario.hasMany(models.Billetera, {
     foreignKey: 'id_usuario',
-    sourceKey: 'id'
+    sourceKey: 'id' // <-- debe ser 'id' si así es en la tabla
 });
 
+models.Billetera.belongsTo(models.Usuario, {
+    foreignKey: 'id_usuario',
+    targetKey: 'id', // <-- debe ser 'id'
+    as: 'usuario'
+});
 // Una billetera pertenece a una moneda
 models.Billetera.belongsTo(models.Moneda, {
     foreignKey: 'id_moneda',
