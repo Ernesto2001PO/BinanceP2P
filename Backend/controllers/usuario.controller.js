@@ -93,3 +93,35 @@ exports.login = async (req, res) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }
+
+exports.hacerAdmin = async (req, res) => {
+    try {
+        const { id_usuario } = req.params;
+
+        const usuario = await models.Usuario.findByPk(id_usuario);
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        if (usuario.rol === "admin") {
+            return res.status(400).json({ message: "El usuario ya es administrador" });
+        }
+
+        usuario.rol = "admin";
+        await usuario.save();
+
+        res.json({
+            message: "Usuario actualizado a administrador exitosamente",
+            usuario: {
+                id: usuario.id,
+                nombre: usuario.nombre,
+                email: usuario.email,
+                rol: usuario.rol,
+                fecha_creacion: usuario.fecha_creacion,
+            },
+        });
+    } catch (error) {
+        console.error("Error al hacer administrador al usuario:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}

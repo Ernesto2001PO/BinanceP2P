@@ -10,6 +10,14 @@ import Login from "./pages/Login"
 import Registro from "./pages/Registro";
 import Page from "./pages/Page";
 import Operaciones from "./pages/Operaciones";
+import Admin from "./pages/Admin";
+
+// admin components
+import FormMoneda from "./components/admin/FormMoneda";
+import UsuarioAdmin from "./components/admin/UsuarioAdmin";
+
+
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -19,6 +27,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/register" element={<Registro />} />
         <Route path="/page" element={<Page />} />
         <Route path="/operar/:id_billetera" element={<Operaciones />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/usuarios" element={<UsuarioAdmin />} />
+        <Route path="/admin/create-moneda" element={<FormMoneda />} />
+        <Route path="/admin/edit-moneda/:id" element={<FormMoneda />} />
 
       </Routes>
     </BrowserRouter>

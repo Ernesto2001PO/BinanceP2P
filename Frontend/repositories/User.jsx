@@ -21,6 +21,24 @@ const User = {
       console.error("Error logging in:", error);
       throw error;
     }
+  },
+  getAllUsers: async () => {
+    try {
+      const response = await axiosInstance.get("/usuario/obtener_usuarios");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  },
+  makeAdmin: async (userId) => {
+    try {
+      const response = await axiosInstance.put(`/usuario/hacer_admin/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error making user admin:", error);
+      throw error;
+    }
   }
 
 }
