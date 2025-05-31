@@ -4,8 +4,9 @@ const Usuario = require("./usuario")(sequelize);
 const Token = require("./token")(sequelize);
 const Anuncio = require("./anuncio")(sequelize);
 const Billetera = require("./billetera")(sequelize);
-const Transacciones = require("./transaccion")(sequelize);
+const Transaccion = require("./transaccion")(sequelize);
 const Moneda = require("./moneda")(sequelize);
+const Transferencia = require("./Transferencia")(sequelize);
 
 // Definir relaciones aquí
 Usuario.hasMany(Token, {
@@ -22,8 +23,9 @@ module.exports = {
     Token,
     Anuncio,
     Billetera,
-    Transacciones,
+    Transaccion,
     Moneda,
+    Transferencia,
     sequelize,
     Sequelize: sequelize.Sequelize
 };

@@ -1,40 +1,30 @@
 const { DataTypes } = require('sequelize');
 
 
-
-
 module.exports = function (sequelize) {
-    const Transaccion = sequelize.define(
-        'Transaccion',
+    const Transferencia = sequelize.define(
+        'Transferencia',
         {
-            id_transaccion: {
+            id_transferencia: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
             },
-            id_anuncio: {
+            id_origen: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            id_comprador: { // el que inicia la compra
+            id_destino: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            id_vendedor: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-            },
-            monto: {
+            monto_origen: {
                 type: DataTypes.DECIMAL(18, 6),
                 allowNull: false,
             },
-            estado: {
-                type: DataTypes.STRING, // pendiente, pagado, verificado, cancelado
+            monto_convertido: {
+                type: DataTypes.DECIMAL(18, 6),
                 allowNull: false,
-            },
-            comprobante_pago: {
-                type: DataTypes.STRING, // URL de imagen o texto
-                allowNull: true,
             },
             fecha: {
                 type: DataTypes.DATE,
@@ -43,10 +33,10 @@ module.exports = function (sequelize) {
             },
         },
         {
-            tableName: 'transaccion',
+            tableName: 'transferencia',
             timestamps: false,
         }
     );
 
-    return Transaccion;
+    return Transferencia;
 }

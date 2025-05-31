@@ -42,12 +42,13 @@ exports.obtenerBilleterasPorUsuario = async (req, res) => {
                     model: models.Usuario,
                     as: 'usuario',
                     attributes: ['id', 'nombre', 'email']
+                },
+                {
+                    model: models.Moneda,
+                    attributes: ['id_moneda', 'nombre', 'simbolo']
                 }
             ]
         });
-
-
-
 
         if (billeteras.length === 0) {
             return res.status(404).json({ message: "No se encontraron billeteras para este usuario" });
@@ -67,12 +68,30 @@ exports.obtenerBilleteraPorId = async (req, res) => {
 
         // Obtener la billetera por ID
         const billetera = await models.Billetera.findByPk(id_billetera);
+        // Incluir información del usuario y moneda
+        if (!billetera) {
+            return res.status(404).json({ message: "Billetera no encontrada" });
+        }
+        const billeteraConDetalles = await models.Billetera.findOne({
+            where: { id_billetera },
+            include: [
+                {
+                    model: models.Usuario,
+                    as: 'usuario',
+                    attributes: ['id', 'nombre', 'email']
+                },
+                {
+                    model: models.Moneda,
+                    attributes: ['id_moneda', 'nombre', 'simbolo']
+                }
+            ]
+        });
 
         if (!billetera) {
             return res.status(404).json({ message: "Billetera no encontrada" });
         }
 
-        res.json(billetera);
+        res.json(billeteraConDetalles);
     } catch (error) {
         console.error("Error al obtener la billetera:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
