@@ -8,7 +8,6 @@ import Button from "react-bootstrap/Button";
 
 function Menu() {
   const { isAuthenticated, logout } = useAuth(false);
-  
   const userName = localStorage.getItem("user");
 
   return (
@@ -28,8 +27,13 @@ function Menu() {
                 Home
               </NavLink>
             </>
+            {location.pathname !== "/admin" && localStorage.getItem("tipo_usuario") === "admin" && (
+              <NavLink to="/admin" className="nav-link">
+                Admin
+              </NavLink>
+            )}
             <>
-              {!isAuthenticated &&  location.pathname !== "/login" && location.pathname !== "/register" && (
+              {!isAuthenticated && location.pathname !== "/login" && location.pathname !== "/register" && (
                 <>
                   <NavLink to="/login" className="nav-link">
                     Login
@@ -37,6 +41,7 @@ function Menu() {
                   <NavLink to="/register" className="nav-link">
                     Register
                   </NavLink>
+
 
                   <NavLink to="/" className="nav-link">
                     {userName}

@@ -18,9 +18,11 @@ models.Billetera.belongsTo(models.Usuario, {
 
 models.Usuario.hasMany(models.Anuncio, {
     foreignKey: 'id_usuario',
+    
 });
 models.Anuncio.belongsTo(models.Usuario, {
     foreignKey: 'id_usuario',
+    as: 'usuario'
 });
 
 

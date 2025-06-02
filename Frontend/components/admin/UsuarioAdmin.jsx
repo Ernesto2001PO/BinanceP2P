@@ -79,7 +79,7 @@ const UsuarioAdmin = () => {
                                                     </td>
                                                 )}
                                                 <td>
-                                                    {user.rol === 'admin' && (
+                                                    {user.rol === 'usuario' && (
                                                         <Button variant="warning" size="sm" className="me-2" onClick={() => makeAdmin(user.id)}>
                                                             Hacer administrador
                                                         </Button>
