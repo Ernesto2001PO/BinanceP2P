@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const { defaultValueSchemable } = require('sequelize/lib/utils');
 
 
 
@@ -30,6 +31,10 @@ module.exports = function (sequelize) {
             fecha_anuncio: {
                 type: DataTypes.DATE,
                 allowNull: false,
+            },
+            descripcion: {
+                type: DataTypes.STRING,
+                allowNull: true,
             },
         },
         {

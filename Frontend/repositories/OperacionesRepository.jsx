@@ -12,6 +12,15 @@ const OperacionesRepository = {
       throw error;
     }
   },
+  crearAnuncio : async (anuncioData) => {
+    try {
+      const response = await axiosInstance.post("/operaciones/anuncio", anuncioData);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating ad:", error);
+      throw error;
+    }
+  },
 
   traerTodosLosAnuncios: async () => {
     try {

@@ -43,6 +43,7 @@ const Vender = () => {
                         <div><strong>Criptomoneda:</strong> {anuncio.Moneda?.nombre || "N/A"} ({anuncio.Moneda?.simbolo || ""})</div>
                         <div><strong>Monto:</strong> {anuncio.monto}</div>
                         <div><strong>Fecha:</strong> {new Date(anuncio.fecha_anuncio).toLocaleString()}</div>
+                        <div><strong>Descripción:</strong> {anuncio.descripcion || "N/A"}</div>
                     </div>
                 ))
             )}

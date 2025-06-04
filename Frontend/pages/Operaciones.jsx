@@ -38,12 +38,13 @@ const Operar = () => {
                     <div className="d-flex gap-2 mt-4">
                         <button onClick={() => navigate(`/comprar`)} className="btn btn-success flex-fill">Comprar</button>
                         <button onClick={() => navigate(`/vender`)} className="btn btn-warning flex-fill">Vender</button>
-                        <button onClick={() => navigate(`/transferir/${id_billetera}`)} className="btn btn-info flex-fill">Transferir</button>
+                        <button onClick={() => navigate(`/transferir`)} className="btn btn-info flex-fill">Transferir</button>
+                        <button onClick={() => navigate(`/anuncios/${id_billetera}`)} className="btn btn-secondary flex-fill">Crear Anuncio</button>
                     </div>
                 </div>
             </div>
             <div className="text-center mt-4">
-                <button onClick={() => navigate('/page')} className="btn btn-secondary">Volver a Billeteras</button>
+                <button onClick={() => navigate('/page')} className="btn btn-danger">Volver a Billeteras</button>
             </div>
         </div>
     );
