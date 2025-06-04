@@ -14,6 +14,7 @@ import Admin from "./pages/Admin";
 
 // Pages Operaciones
 import Comprar from "./pages/Operaciones/Comprar";
+import Vender from "./pages/Operaciones/Vender";
 
 // admin components
 import FormMoneda from "./components/admin/FormMoneda";
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/admin/create-moneda" element={<FormMoneda />} />
         <Route path="/admin/edit-moneda/:id" element={<FormMoneda />} />
         <Route path="/comprar" element={<Comprar />} />
+        <Route path="/vender" element={<Vender />} />
 
 
 

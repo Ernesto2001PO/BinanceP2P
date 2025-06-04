@@ -37,7 +37,7 @@ const Operar = () => {
                     <p className="card-text"><strong>Saldo:</strong> {billetera.saldo}</p>
                     <div className="d-flex gap-2 mt-4">
                         <button onClick={() => navigate(`/comprar`)} className="btn btn-success flex-fill">Comprar</button>
-                        <button onClick={() => navigate(`/vender/${id_billetera}`)} className="btn btn-warning flex-fill">Vender</button>
+                        <button onClick={() => navigate(`/vender`)} className="btn btn-warning flex-fill">Vender</button>
                         <button onClick={() => navigate(`/transferir/${id_billetera}`)} className="btn btn-info flex-fill">Transferir</button>
                     </div>
                 </div>

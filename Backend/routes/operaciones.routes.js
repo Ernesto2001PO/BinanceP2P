@@ -7,8 +7,10 @@ module.exports = (app) => {
     const operacionesController = require("../controllers/operaciones.controller");
 
     router.post("/anuncio-venta", requireUser, operacionesController.crearAnuncioVenta);
+    router.post("/anuncio-compra", requireUser, operacionesController.crearAnuncioCompra);
     router.get("/anuncios-venta", operacionesController.traerTodosLosAnuncios);
     router.get("/anuncios-venta/:id_usuario", requireUser, operacionesController.traerAnunciosVentaMenoElPropio);
+    router.get("/anuncios-compra/:id_usuario", requireUser, operacionesController.traerAnunciosCompraMenosElPropio);
 
     app.use("/api/operaciones", router);
 }

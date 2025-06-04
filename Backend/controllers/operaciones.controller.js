@@ -113,6 +113,37 @@ module.exports.traerAnunciosVentaMenoElPropio = async (req, res) => {
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }
+
+module.exports.traerAnunciosCompraMenosElPropio = async (req, res) => {
+    try {
+        const { id_usuario } = req.params;
+
+        // Traer anuncios de compra que no sean del usuario
+        const anuncios = await models.Anuncio.findAll({
+            where: {
+                tipo_anuncio: "compra",
+                id_usuario: { [models.Sequelize.Op.ne]: id_usuario }
+            },
+            include: [
+                {
+                    model: models.Usuario,
+                    as: 'usuario',
+                    attributes: ['id', 'nombre', 'email']
+                },
+                {
+                    model: models.Moneda,
+                    attributes: ['id_moneda', 'nombre', 'simbolo']
+                }
+            ]
+        });
+
+        res.json({ anuncios });
+    } catch (error) {
+        console.error("Error al obtener los anuncios de compra:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
 module.exports.traerTodosLosAnuncios = async (req, res) => {
     try {
         // Traer todos los anuncios
