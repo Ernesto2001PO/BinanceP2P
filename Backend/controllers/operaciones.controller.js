@@ -20,7 +20,7 @@ module.exports.crearAnuncioVenta = async (req, res) => {
         if (!moneda) {
             return res.status(404).json({ message: "Moneda no encontrada" });
 
-    
+
         }
 
 
@@ -29,11 +29,11 @@ module.exports.crearAnuncioVenta = async (req, res) => {
             id_billetera,
             id_usuario,
             id_moneda,
-            tipo_anuncio : "venta", 
+            tipo_anuncio: "venta",
             monto,
             descripcion,
             fecha_anuncio: new Date(),
-            
+
         });
 
         res.status(201).json(nuevoAnuncio);
@@ -69,10 +69,10 @@ module.exports.crearAnuncioCompra = async (req, res) => {
             id_billetera,
             id_usuario,
             id_moneda,
-            tipo_anuncio : "compra", 
+            tipo_anuncio: "compra",
             monto,
             fecha_anuncio: new Date(),
-            
+
         });
 
         res.status(201).json(nuevoAnuncio);
@@ -84,11 +84,11 @@ module.exports.crearAnuncioCompra = async (req, res) => {
 
 module.exports.crearAnuncio = async (req, res) => {
     try {
-        const { id_billetera, id_usuario, id_moneda, tipo_anuncio, monto } = req.body;
+        const { id_billetera, id_usuario, id_moneda, tipo_anuncio, monto, descripcion } = req.body;
         // Validar que la billetera exista
         const billetera = await models.Billetera.findByPk(id_billetera);
         if (!billetera) {
-            return res.status(404).json({ message: "Billetera no encontrada" });            
+            return res.status(404).json({ message: "Billetera no encontrada" });
         }
         // Validar que el usuario exista
         const usuario = await models.Usuario.findByPk(id_usuario);
@@ -107,6 +107,7 @@ module.exports.crearAnuncio = async (req, res) => {
             id_moneda,
             tipo_anuncio,
             monto,
+            descripcion,
             fecha_anuncio: new Date(),
         });
 
@@ -199,6 +200,82 @@ module.exports.traerTodosLosAnuncios = async (req, res) => {
         res.json({ anuncios });
     } catch (error) {
         console.error("Error al obtener los anuncios:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+module.exports.hacerTransferencia = async (req, res) => {
+    try {
+        const { id_billetera_origen, id_billetera_destino, monto } = req.body;
+
+        // Validar que las billeteras existan
+        const billeteraOrigen = await models.Billetera.findByPk(id_billetera_origen);
+        if (!billeteraOrigen) {
+            return res.status(404).json({ message: "Billetera de origen no encontrada" });
+        }
+        const billeteraDestino = await models.Billetera.findByPk(id_billetera_destino);
+        if (!billeteraDestino) {
+            return res.status(404).json({ message: "Billetera de destino no encontrada" });
+        }
+
+        // Verificar saldo suficiente
+        if (parseFloat(billeteraOrigen.saldo) < parseFloat(monto)) {
+            return res.status(400).json({ message: "Saldo insuficiente en la billetera de origen" });
+        }
+
+        // Realizar la transferencia
+        await models.Billetera.update(
+            { saldo: models.Sequelize.literal(`saldo - ${monto}`) },
+            { where: { id_billetera: id_billetera_origen } }
+        );
+        await models.Billetera.update(
+            { saldo: models.Sequelize.literal(`saldo + ${monto}`) },
+            { where: { id_billetera: id_billetera_destino } }
+        );
+
+        // Crear el registro de la transferencia
+        await models.Transferencia.create({
+            id_origen: id_billetera_origen,
+            id_destino: id_billetera_destino,
+            monto_origen: monto,
+            fecha: new Date()
+        });
+
+        res.status(200).json({ message: "Transferencia realizada con éxito" });
+    } catch (error) {
+        console.error("Error al realizar la transferencia:", error);
+        return res.status(500).json({ message: "Error interno del servidor" });
+    }
+}
+
+module.exports.obtenerTransferenciasPorBilletera = async (req, res) => {
+    try {
+        const { id_billetera } = req.params;
+
+        const transferencias = await models.Transferencia.findAll({
+            where: {
+                [models.Sequelize.Op.or]: [
+                    { id_origen: id_billetera },
+                    { id_destino: id_billetera }
+                ]
+            },
+            include: [
+                {
+                    model: models.Billetera,
+                    as: 'origen',
+                    attributes: ['id_billetera', 'id_usuario']
+                },
+                {
+                    model: models.Billetera,
+                    as: 'destino',
+                    attributes: ['id_billetera', 'id_usuario']
+                },
+            ]
+        });
+
+        res.json({ transferencias });
+    } catch (error) {
+        console.error("Error al obtener las transferencias:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 }

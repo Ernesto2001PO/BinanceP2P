@@ -13,6 +13,9 @@ module.exports = (app) => {
     router.get("/anuncios-venta", operacionesController.traerTodosLosAnuncios);
     router.get("/anuncios-venta/:id_usuario", requireUser, operacionesController.traerAnunciosVentaMenosElPropio);
     router.get("/anuncios-compra/:id_usuario", requireUser, operacionesController.traerAnunciosCompraMenosElPropio);
+    router.get("/transferencias/:id_billetera", operacionesController.obtenerTransferenciasPorBilletera);
+
+    router.post("/transaccion", requireUser, operacionesController.hacerTransferencia);
 
     app.use("/api/operaciones", router);
 }

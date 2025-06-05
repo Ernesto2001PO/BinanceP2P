@@ -55,6 +55,7 @@ const Anuncio = () => {
 
             await OperacionesRepository.crearAnuncio(formData)
             console.log("Anuncio creado exitosamente");
+            alert("Anuncio creado exitosamente");
             navigate(`/operar/${id_billetera}`);
 
         } catch (error) {

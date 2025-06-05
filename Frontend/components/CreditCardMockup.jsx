@@ -65,15 +65,15 @@ const CreditCardMockup = () => {
                                 <div>
                                     <div style={{ fontSize: "0.8em" }}>Saldo</div>
                                     <div>{b.Moneda?.simbolo} {b.saldo || "0.00"}</div>
-                                    <button style={{
+                                    <NavLink style={{
                                         background: "transparent",
                                         border: "none",
                                         color: "#fff",
                                         cursor: "pointer",
                                         fontSize: "0.8em"
-                                    }} onClick={() => alert(`Detalles de la billetera ${b.id_billetera}`)}>
+                                    }} to={`/detalles/${b.id_billetera}`}>
                                         Ver detalles
-                                    </button>
+                                    </NavLink>
                                     <NavLink to={`/operar/${b.id_billetera}`} style={{
                                         background: "transparent",
                                         color: "#fff",

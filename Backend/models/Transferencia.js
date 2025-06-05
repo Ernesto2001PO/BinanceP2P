@@ -22,10 +22,6 @@ module.exports = function (sequelize) {
                 type: DataTypes.DECIMAL(18, 6),
                 allowNull: false,
             },
-            monto_convertido: {
-                type: DataTypes.DECIMAL(18, 6),
-                allowNull: false,
-            },
             fecha: {
                 type: DataTypes.DATE,
                 allowNull: false,
