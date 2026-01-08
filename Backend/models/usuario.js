@@ -22,7 +22,7 @@ module.exports = function (sequelize) {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            rol: {
+            es_admin: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },

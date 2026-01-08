@@ -41,8 +41,6 @@ function Menu() {
                   <NavLink to="/register" className="nav-link">
                     Register
                   </NavLink>
-
-
                   <NavLink to="/" className="nav-link">
                     {userName}
                   </NavLink>

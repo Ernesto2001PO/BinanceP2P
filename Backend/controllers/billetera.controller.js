@@ -5,7 +5,6 @@ exports.crearBilletera = async (req, res) => {
     try {
         const { id_usuario, id_moneda, saldo } = req.body;
 
-        // Verificar si la billetera ya existe para ese usuario y moneda
         const billeteraExistente = await models.Billetera.findOne({
             where: { id_usuario, id_moneda }
         });
@@ -14,11 +13,10 @@ exports.crearBilletera = async (req, res) => {
             return res.status(400).json({ message: "La billetera ya existe para este usuario y moneda" });
         }
 
-        // Crear la nueva billetera
         const nuevaBilletera = await models.Billetera.create({
             id_usuario,
             id_moneda,
-            saldo: saldo || 0 // Asignar un saldo inicial de 0 si no se proporciona
+            saldo: saldo || 0 
         });
 
         res.status(201).json({
@@ -34,7 +32,6 @@ exports.obtenerBilleterasPorUsuario = async (req, res) => {
     try {
         const { id_usuario } = req.params;
 
-        // Obtener las billeteras del usuario
         const billeteras = await models.Billetera.findAll({
             where: { id_usuario },
             include: [
@@ -66,9 +63,7 @@ exports.obtenerBilleteraPorId = async (req, res) => {
     try {
         const { id_billetera } = req.params;
 
-        // Obtener la billetera por ID
         const billetera = await models.Billetera.findByPk(id_billetera);
-        // Incluir información del usuario y moneda
         if (!billetera) {
             return res.status(404).json({ message: "Billetera no encontrada" });
         }
@@ -102,7 +97,6 @@ exports.obtenerBillteraPorMoneda = async (req, res) => {
     try {
         const { id_moneda } = req.params;
 
-        // Obtener las billeteras por ID de moneda
         const billeteras = await models.Billetera.findAll({
             where: { id_moneda }
         });
@@ -147,7 +141,6 @@ exports.eliminarBilletera = async (req, res) => {
     try {
         const { id_billetera } = req.params;
 
-        // Eliminar la billetera
         const deleted = await models.Billetera.destroy({
             where: { id_billetera }
         });

@@ -2,15 +2,6 @@ import axiosInstance from "../api/axiosInstance";
 
 
 const User = {
-  registerUser: async (userData) => {
-    try {
-      const response = await axiosInstance.post("/usuario/crear_usuario", userData);
-      return response.data;
-    } catch (error) {
-      console.error("Error registering user:", error);
-      throw error;
-    }
-  },
   loginUser: async (credentials) => {
     try {
       const response = await axiosInstance.post("/usuario/login", credentials);
@@ -22,6 +13,18 @@ const User = {
       throw error;
     }
   },
+  registerUser: async (userData) => {
+    try {
+      const response = await axiosInstance.post("/usuario/crear_usuario", userData);
+      console.log(response.data);
+
+      return response.data;
+    } catch (error) {
+      console.error("Error registering user:", error);
+      throw error;
+    }
+  }
+  ,
   getAllUsers: async () => {
     try {
       const response = await axiosInstance.get("/usuario/obtener_usuarios");

@@ -11,8 +11,6 @@ const BilleteraRepository = {
       throw error;
     }
   },
-
-
   obtenerBilleteraPorUsuarioId: async (id_usuario) => {
     try {
       const response = await axiosInstance.get(`/billetera/usuario/${id_usuario }`);
@@ -22,16 +20,6 @@ const BilleteraRepository = {
       throw error;
     }
   },
-  
-obtenerBilleteraPorMonedaId: async (id_moneda) => {
-    try {
-      const response = await axiosInstance.get(`/billetera/moneda/${id_moneda}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error fetching wallet by currency ID:", error);
-      throw error;
-    }
-    },
 obtenerBilleteraPorId: async (id_billetera) => {
     try {
       const response = await axiosInstance.get(`/billetera/${id_billetera}`);
@@ -41,16 +29,6 @@ obtenerBilleteraPorId: async (id_billetera) => {
       throw error;
     }
     },
-  deleteBilletera: async (id_billetera) => {
-    try {
-      const response = await axiosInstance.delete(`/billetera/${id_billetera}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error deleting wallet:", error);
-      throw error;
-    }
-  },
-
 };
 
 export default BilleteraRepository;
